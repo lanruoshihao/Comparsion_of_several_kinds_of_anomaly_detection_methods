@@ -1,0 +1,1 @@
+# Comparsion_of_several_kinds_of_outlier_detection_methods
