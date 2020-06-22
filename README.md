@@ -4,13 +4,21 @@ python开发环境：pycharm+Anaconda3
 
 几种非监督学习的异常检测算法：
 1、孤立森林(Isolation Forest)
+
 2、一分类支持向量机(one-class svm)
+
 3、基于协方差的稳健估计(Robust covariance)
+
 4、自编码算法(Autoencoder)
+
 5、基于距离的嵌套循环检测算法
+
 6、局部离群因子(LOF)
+
 7、增强的局部稀疏系数(Enhanced Local Sparsity Coefficient)
+
 8、kmeans算法
+
 9、DBSCAN算法
 
 
