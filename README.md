@@ -3,6 +3,7 @@
 python开发环境：pycharm+Anaconda3
 
 几种非监督学习的异常检测算法：
+
 1、孤立森林(Isolation Forest)
 
 2、一分类支持向量机(one-class svm)
