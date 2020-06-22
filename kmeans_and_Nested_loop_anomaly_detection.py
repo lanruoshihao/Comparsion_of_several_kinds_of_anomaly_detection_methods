@@ -106,84 +106,85 @@ def Outlier_test_based_on_distance(test_df, dist_r=10, p_n=0.01):
     return Outlier_set_list
 
 
-file_path = "Ionosphere.txt"
-final_data_list, score_list, cluster_num_list = kmeans_cluster(file_path)
-print("len(final_data_list)=", len(final_data_list))
-print(np.argmax(score_list))
-print(cluster_num_list[np.argmax(score_list)])
-###
-n_clusters = cluster_num_list[np.argmax(score_list)]
-km_cluster = KMeans(n_clusters=n_clusters, max_iter=10000, tol=2e-6).fit(final_data_list)
-km_labels = km_cluster.labels_
-km_cluster_centers = km_cluster.cluster_centers_
-print("km_cluster_centers=", km_cluster_centers)
-print("km_labels=", km_labels)
-print("len(km_labels)=", len(km_labels))
-###
-plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
-plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
-###
-construct_silhouette_score(score_list, cluster_num_list)
-###
-data_df = pd.DataFrame(final_data_list)
-test_data_df = data_df
-###
-###
-pca = PCA(n_components=2)
-new_pca = pd.DataFrame(pca.fit_transform(data_df))
-print("type(new_pca)=", type(new_pca))
-##
-data_df['cluster_code'] = km_labels
-###
-##
-dist_list = []
-for js in range(len(test_data_df)):
-    if data_df.loc[js, 'cluster_code'] == 0:
-        dist_list.append(get_nodes_distance(list(test_data_df.iloc[js]), list(km_cluster_centers[0])))
-    elif data_df.loc[js, 'cluster_code'] == 1:
-        dist_list.append(get_nodes_distance(list(test_data_df.iloc[js]), list(km_cluster_centers[1])))
-    elif data_df.loc[js, 'cluster_code'] == 2:
-        dist_list.append(get_nodes_distance(list(test_data_df.iloc[js]), list(km_cluster_centers[2])))
-    else:
-        dist_list.append(get_nodes_distance(list(test_data_df.iloc[js]), list(km_cluster_centers[3])))
-###
-data_df['dist'] = dist_list
-###
-# 根据聚类组别和每组按照点离该组均值点距离由近到远进行排序
-sort_data_df = data_df.sort_values(by=['cluster_code', 'dist'], ascending=[True, True])
-sort_data_df.reset_index(drop=True, inplace=True)
-print("sort_data_df=", sort_data_df)
-###
-Outlier_set_list = Outlier_test_based_on_distance(sort_data_df, dist_r=1, p_n=0.01)
-print("sort_data_df中为离群点的数据对象索引号列表Outlier_set_list=", Outlier_set_list)
-print("sort_data_df中为离群点的数据对象个数len(Outlier_set_list)=", len(Outlier_set_list))
-###
-data_df.drop('dist', axis=1, inplace=True)
-print("data_df.columns=", data_df.columns)
-###
-print("km_labels=", km_labels)
-df_count_type = data_df.groupby('cluster_code').apply(np.size)
-print("df_count_type=", df_count_type)
-print(data_df)
-###
-# print("data_df=", data_df)
-print("data_df['cluster_code']=", list(set(data_df['cluster_code'])))
-data_0 = new_pca[data_df['cluster_code'] == 0]
-plt.plot(data_0[0], data_0[1], 'r*')
-###
-data_1 = new_pca[data_df['cluster_code'] == 1]
-plt.plot(data_1[0], data_1[1], 'g*')
-###
-data_2 = new_pca[data_df['cluster_code'] == 2]
-plt.plot(data_2[0], data_2[1], 'b*')
-###
-data_3 = new_pca[data_df['cluster_code'] == 3]
-plt.plot(data_3[0], data_3[1], 'k*')
-plt.title('kmeans_clustering_algorithm')
-###
-###
-plt.gcf().savefig('kmeans.png')
-plt.show()
+if __name__ == '__main__':
+    file_path = "Ionosphere.txt"
+    final_data_list, score_list, cluster_num_list = kmeans_cluster(file_path)
+    print("len(final_data_list)=", len(final_data_list))
+    print(np.argmax(score_list))
+    print(cluster_num_list[np.argmax(score_list)])
+    ###
+    n_clusters = cluster_num_list[np.argmax(score_list)]
+    km_cluster = KMeans(n_clusters=n_clusters, max_iter=10000, tol=2e-6).fit(final_data_list)
+    km_labels = km_cluster.labels_
+    km_cluster_centers = km_cluster.cluster_centers_
+    print("km_cluster_centers=", km_cluster_centers)
+    print("km_labels=", km_labels)
+    print("len(km_labels)=", len(km_labels))
+    ###
+    plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
+    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+    ###
+    construct_silhouette_score(score_list, cluster_num_list)
+    ###
+    data_df = pd.DataFrame(final_data_list)
+    test_data_df = data_df
+    ###
+    ###
+    pca = PCA(n_components=2)
+    new_pca = pd.DataFrame(pca.fit_transform(data_df))
+    print("type(new_pca)=", type(new_pca))
+    ##
+    data_df['cluster_code'] = km_labels
+    ###
+    ##
+    dist_list = []
+    for js in range(len(test_data_df)):
+        if data_df.loc[js, 'cluster_code'] == 0:
+            dist_list.append(get_nodes_distance(list(test_data_df.iloc[js]), list(km_cluster_centers[0])))
+        elif data_df.loc[js, 'cluster_code'] == 1:
+            dist_list.append(get_nodes_distance(list(test_data_df.iloc[js]), list(km_cluster_centers[1])))
+        elif data_df.loc[js, 'cluster_code'] == 2:
+            dist_list.append(get_nodes_distance(list(test_data_df.iloc[js]), list(km_cluster_centers[2])))
+        else:
+            dist_list.append(get_nodes_distance(list(test_data_df.iloc[js]), list(km_cluster_centers[3])))
+    ###
+    data_df['dist'] = dist_list
+    ###
+    # 根据聚类组别和每组按照点离该组均值点距离由近到远进行排序
+    sort_data_df = data_df.sort_values(by=['cluster_code', 'dist'], ascending=[True, True])
+    sort_data_df.reset_index(drop=True, inplace=True)
+    print("sort_data_df=", sort_data_df)
+    ###
+    Outlier_set_list = Outlier_test_based_on_distance(sort_data_df, dist_r=1, p_n=0.01)
+    print("sort_data_df中为离群点的数据对象索引号列表Outlier_set_list=", Outlier_set_list)
+    print("sort_data_df中为离群点的数据对象个数len(Outlier_set_list)=", len(Outlier_set_list))
+    ###
+    data_df.drop('dist', axis=1, inplace=True)
+    print("data_df.columns=", data_df.columns)
+    ###
+    print("km_labels=", km_labels)
+    df_count_type = data_df.groupby('cluster_code').apply(np.size)
+    print("df_count_type=", df_count_type)
+    print(data_df)
+    ###
+    # print("data_df=", data_df)
+    print("data_df['cluster_code']=", list(set(data_df['cluster_code'])))
+    data_0 = new_pca[data_df['cluster_code'] == 0]
+    plt.plot(data_0[0], data_0[1], 'r*')
+    ###
+    data_1 = new_pca[data_df['cluster_code'] == 1]
+    plt.plot(data_1[0], data_1[1], 'g*')
+    ###
+    data_2 = new_pca[data_df['cluster_code'] == 2]
+    plt.plot(data_2[0], data_2[1], 'b*')
+    ###
+    data_3 = new_pca[data_df['cluster_code'] == 3]
+    plt.plot(data_3[0], data_3[1], 'k*')
+    plt.title('kmeans_clustering_algorithm')
+    ###
+    ###
+    plt.gcf().savefig('kmeans.png')
+    plt.show()
 
 
 

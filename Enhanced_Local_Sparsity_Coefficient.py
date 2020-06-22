@@ -82,79 +82,80 @@ def get_p_obj_pf(code_p, k_neighbourhood_list, data_df):
     return p_pf
 
 
-file_path = "Ionosphere.txt"
-data_list = read_file_data(file_path)
-data_df = pd.DataFrame(data_list)
-###
-###
-k_max_dist_list = []  # 记录距离指定数据对象最近的k个点中距离的最大值
-k_neighbourhood_list = []
-outlier_node_list = []  # 可能是离群点的候选集合
-k = 5
-data_js_cnt = 0
-for nums in range(len(data_df)):
-    data_js_cnt += 1
-    print("data_js_cnt=", data_js_cnt)
-    k_max_dist, k_neighbourhood_code, k_neighbourhood_dict = get_min_k_distances(nums, data_df, k)
-    k_max_dist_list.append(k_max_dist)
-    k_neighbourhood_list.append(k_neighbourhood_code)
-    p_pf = get_p_obj_pf(nums, k_neighbourhood_list, data_df)
-    print("p_pf=", p_pf)
-    p_lsr = get_p_lsr(k_neighbourhood_dict, k)
-    print("p_lsr=", p_lsr)
-    if p_lsr < p_pf:
-        outlier_node_list.append(nums)
-    else:
-        continue
-###
-wait_test_df = data_df.iloc[outlier_node_list]
-wait_test_df.reset_index(drop=True, inplace=True)
-print("outlier_node_list=", outlier_node_list)
-print("type(outlier_node_list)=", type(outlier_node_list))
-print("wait_test_df=", wait_test_df)
-print("type(wait_test_df)=", type(wait_test_df))
-###
-LSC_dict = {}
-data_js_num = 0
-for js_cnt in range(len(wait_test_df)):
-    data_js_num += 1
-    lsr_sum = 0
-    print("data_js_num=", data_js_num)
-    cnt_k_max_dist, cnt_k_neighbourhood_code, cnt_k_neighbourhood_dict = get_min_k_distances(js_cnt, wait_test_df, k)
-    p_lsr = get_p_lsr(cnt_k_neighbourhood_dict, k)
-    for js_num in range(len(wait_test_df)):
-        if js_cnt!=js_num:
-            num_k_max_dist, num_k_neighbourhood_code, num_k_neighbourhood_dict = get_min_k_distances(js_num, wait_test_df, k)
-            p_lsr_num = get_p_lsr(num_k_neighbourhood_dict, k)
-            lsr_sum += p_lsr_num
-    LSC_dict[str(js_cnt)] = lsr_sum/(p_lsr*len(cnt_k_neighbourhood_code))
-###
-n = 40
-LSC_dict = dict(sorted(LSC_dict.items(), key=lambda x: x[1], reverse=True))
-# print("LSC_dict=", LSC_dict)
-code_list = [int(node_code) for node_code in list(LSC_dict.keys())]
-outlier_df = wait_test_df.iloc[code_list]
-outlier_df.reset_index(drop=True, inplace=True)
-###
-pca = PCA(n_components=2)
-new_pca = pd.DataFrame(pca.fit_transform(data_df))
-# print("type(new_pca)=", type(new_pca))
-###
-plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
-plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
-plt.scatter(np.array(new_pca)[:, 0], np.array(new_pca)[:, 1], s=10, c='b', alpha=0.5)
-###
-print("outlier_df=", outlier_df)
-print("type(outlier_df)=", type(outlier_df))
-###
-# outlier_df.to_excel("avg_density_outliers_test.xlsx", sheet_name="avg_density_outliers", \
-#                         encoding='utf-8')  # 将采用离群因子而检测到的异常点保存到数据表中
-###
-pca = PCA(n_components=2)
-pca_outlier_df = pd.DataFrame(pca.fit_transform(outlier_df))
-plt.scatter(np.array(pca_outlier_df)[:, 0], np.array(pca_outlier_df)[:, 1], s=10, c='r', alpha=0.5)
-plt.title("基于平均密度的ELSC算法异常检测")
-plt.show()
+if __name__ == '__main__':
+    file_path = "Ionosphere.txt"
+    data_list = read_file_data(file_path)
+    data_df = pd.DataFrame(data_list)
+    ###
+    ###
+    k_max_dist_list = []  # 记录距离指定数据对象最近的k个点中距离的最大值
+    k_neighbourhood_list = []
+    outlier_node_list = []  # 可能是离群点的候选集合
+    k = 5
+    data_js_cnt = 0
+    for nums in range(len(data_df)):
+        data_js_cnt += 1
+        print("data_js_cnt=", data_js_cnt)
+        k_max_dist, k_neighbourhood_code, k_neighbourhood_dict = get_min_k_distances(nums, data_df, k)
+        k_max_dist_list.append(k_max_dist)
+        k_neighbourhood_list.append(k_neighbourhood_code)
+        p_pf = get_p_obj_pf(nums, k_neighbourhood_list, data_df)
+        print("p_pf=", p_pf)
+        p_lsr = get_p_lsr(k_neighbourhood_dict, k)
+        print("p_lsr=", p_lsr)
+        if p_lsr < p_pf:
+            outlier_node_list.append(nums)
+        else:
+            continue
+    ###
+    wait_test_df = data_df.iloc[outlier_node_list]
+    wait_test_df.reset_index(drop=True, inplace=True)
+    print("outlier_node_list=", outlier_node_list)
+    print("type(outlier_node_list)=", type(outlier_node_list))
+    print("wait_test_df=", wait_test_df)
+    print("type(wait_test_df)=", type(wait_test_df))
+    ###
+    LSC_dict = {}
+    data_js_num = 0
+    for js_cnt in range(len(wait_test_df)):
+        data_js_num += 1
+        lsr_sum = 0
+        print("data_js_num=", data_js_num)
+        cnt_k_max_dist, cnt_k_neighbourhood_code, cnt_k_neighbourhood_dict = get_min_k_distances(js_cnt, wait_test_df, k)
+        p_lsr = get_p_lsr(cnt_k_neighbourhood_dict, k)
+        for js_num in range(len(wait_test_df)):
+            if js_cnt!=js_num:
+                num_k_max_dist, num_k_neighbourhood_code, num_k_neighbourhood_dict = get_min_k_distances(js_num, wait_test_df, k)
+                p_lsr_num = get_p_lsr(num_k_neighbourhood_dict, k)
+                lsr_sum += p_lsr_num
+        LSC_dict[str(js_cnt)] = lsr_sum/(p_lsr*len(cnt_k_neighbourhood_code))
+    ###
+    n = 40
+    LSC_dict = dict(sorted(LSC_dict.items(), key=lambda x: x[1], reverse=True))
+    # print("LSC_dict=", LSC_dict)
+    code_list = [int(node_code) for node_code in list(LSC_dict.keys())]
+    outlier_df = wait_test_df.iloc[code_list]
+    outlier_df.reset_index(drop=True, inplace=True)
+    ###
+    pca = PCA(n_components=2)
+    new_pca = pd.DataFrame(pca.fit_transform(data_df))
+    # print("type(new_pca)=", type(new_pca))
+    ###
+    plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
+    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+    plt.scatter(np.array(new_pca)[:, 0], np.array(new_pca)[:, 1], s=10, c='b', alpha=0.5)
+    ###
+    print("outlier_df=", outlier_df)
+    print("type(outlier_df)=", type(outlier_df))
+    ###
+    # outlier_df.to_excel("avg_density_outliers_test.xlsx", sheet_name="avg_density_outliers", \
+    #                         encoding='utf-8')  # 将采用离群因子而检测到的异常点保存到数据表中
+    ###
+    pca = PCA(n_components=2)
+    pca_outlier_df = pd.DataFrame(pca.fit_transform(outlier_df))
+    plt.scatter(np.array(pca_outlier_df)[:, 0], np.array(pca_outlier_df)[:, 1], s=10, c='r', alpha=0.5)
+    plt.title("基于平均密度的ELSC算法异常检测")
+    plt.show()
 
 
 
