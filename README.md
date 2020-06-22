@@ -1,4 +1,4 @@
-# Comparsion_of_several_kinds_of_outlier_detection_methods
+# Comparsion_of_several_kinds_of_anomaly_detection_methods
 
 python开发环境：pycharm+Anaconda3
 
