@@ -30,5 +30,7 @@ python开发环境：pycharm+Anaconda3
 
 
 python中可以用来进行异常检测的算法库：sklearn、pyod和PyNomaly
+
 pyod异常检测库的学习参考链接：https://www.biaodianfu.com/pyod.html
+
 PyNomaly异常检测库的学习参考链接：https://python.ctolib.com/vc1492a-PyNomaly.html
