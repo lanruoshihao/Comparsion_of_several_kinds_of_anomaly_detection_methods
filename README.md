@@ -16,7 +16,7 @@ python开发环境：pycharm+Anaconda3
 
 6、局部离群因子(LOF)
 
-7、增强的局部稀疏系数(Enhanced Local Sparsity Coefficient)
+7、基于平均密度的增强局部稀疏系数(Enhanced Local Sparsity Coefficient)
 
 8、kmeans算法
 
