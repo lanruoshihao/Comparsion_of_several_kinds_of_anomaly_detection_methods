@@ -16,6 +16,8 @@ python开发环境：pycharm+Anaconda3
 
 6、基于平均密度的增强局部稀疏系数(Enhanced Local Sparsity Coefficient)
 
+  算法原理参考链接：http://www.doc88.com/p-9807408443179.html
+
 7、kmeans算法
 
 8、DBSCAN算法
