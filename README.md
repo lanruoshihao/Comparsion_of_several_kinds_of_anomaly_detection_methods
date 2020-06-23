@@ -8,19 +8,17 @@ python开发环境：pycharm+Anaconda3
 
 2、一分类支持向量机(one-class svm)
 
-3、基于协方差的稳健估计(Robust covariance)
+3、自编码算法(Autoencoder)
 
-4、自编码算法(Autoencoder)
+4、基于距离的嵌套循环检测算法
 
-5、基于距离的嵌套循环检测算法
+5、局部离群因子(LOF)
 
-6、局部离群因子(LOF)
+6、基于平均密度的增强局部稀疏系数(Enhanced Local Sparsity Coefficient)
 
-7、基于平均密度的增强局部稀疏系数(Enhanced Local Sparsity Coefficient)
+7、kmeans算法
 
-8、kmeans算法
-
-9、DBSCAN算法
+8、DBSCAN算法
 
 
 
