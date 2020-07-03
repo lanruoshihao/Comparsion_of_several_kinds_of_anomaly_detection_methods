@@ -14,6 +14,8 @@ python开发环境：pycharm+Anaconda3
 
 5、局部离群因子(LOF)
 
+
+
 6、基于平均密度的增强局部稀疏系数(Enhanced Local Sparsity Coefficient)
 
 ELSC作为LOF算法的改进，属于基于平均密度的离群点检测算法，
