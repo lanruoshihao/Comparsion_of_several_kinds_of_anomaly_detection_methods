@@ -18,8 +18,6 @@ a、经典自编码器；b、去噪自编码器；c、稀疏自编码器；d、�
 
 5、局部离群因子(LOF)
 
-
-
 6、基于平均密度的增强局部稀疏系数(Enhanced Local Sparsity Coefficient)
 
 ELSC作为LOF算法的改进，属于基于平均密度的离群点检测算法，
@@ -47,3 +45,7 @@ sklearn库的学习参考链接：https://scikit-learn.org/
 pyod库的学习参考链接：https://www.biaodianfu.com/pyod.html
 
 PyNomaly库的学习参考链接：https://python.ctolib.com/vc1492a-PyNomaly.html
+
+
+异常检测方面的文章：
+https://mp.weixin.qq.com/s/JdCIy9LjXfwfD8vrH4HCeQ
